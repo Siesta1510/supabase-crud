@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { supabase } from "../config/supabase";
 import { useNavigate, Link } from "react-router-dom";
+import { Form, Button} from "react-bootstrap";
 
 function CreateBeverage() {
   const [name, setName] = useState("");
@@ -39,32 +40,37 @@ function CreateBeverage() {
   };
 
   return (
-    <div>
-      <form action="">
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <label htmlFor="image">Image Url</label>
-        <input
-          type="file"
-          accept="image/"
-          id="image"
-          onChange={(e) => setImage(e.target.files[0])}
-        />
-        <label htmlFor="rating">Rating</label>
-        <input
-          type="number"
-          id="rating"
-          onChange={(e) => setRating(e.target.value)}
-        />
+    <div className="w-full d-flex justify-content-center">
+      <div
+        className="d-flex flex-column justify-content-center"
+        style={{ width: "300px", padding: "20px", marginTop: "30px" }}
+      >
+        <Form className="d-flex flex-column" action="" style={{ gap: "10px" }}>
+          <Form.Label htmlFor="name">Name</Form.Label>
+          <Form.Control
+            type="text"
+            id="name"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Form.Label htmlFor="image">Image Url</Form.Label>
+          <Form.Control
+            type="file"
+            accept="image/"
+            id="image"
+            onChange={(e) => setImage(e.target.files[0])}
+          />
+          <Form.Label htmlFor="rating">Rating</Form.Label>
+          <Form.Control
+            type="number"
+            id="rating"
+            onChange={(e) => setRating(e.target.value)}
+          />
 
-        <button onClick={handleSubmit}>Submit</button>
-      </form>
+          <Button onClick={handleSubmit}>Submit</Button>
+        </Form>
 
-      <Link to={"/beverage"}>Back to Home</Link>
+        <Link to={"/beverage"}>Back to Home</Link>
+      </div>
     </div>
   );
 }

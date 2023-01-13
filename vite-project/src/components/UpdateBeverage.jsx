@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "../config/supabase";
 
 import { Link } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
 
 function UpdateBeverage() {
   const [name, setName] = useState("");
@@ -24,6 +25,7 @@ function UpdateBeverage() {
     // console.log(data);
 
     if (data) {
+      console.log(data)
       setName(data.name);
       setImage(data.image);
       setRating(data.rating);
@@ -45,7 +47,6 @@ function UpdateBeverage() {
       "https://mbzluisrzxmskyoiehjz.supabase.co/storage/v1/object/public/beverages/public/" +
       image?.name;
 
-    // console.log(imageSrc);
     const { data, error } = await supabase
       .from("beverage")
       .update({ name, image: imageSrc, rating })
@@ -55,35 +56,44 @@ function UpdateBeverage() {
     setImage(imageSrc);
   };
 
-  // console.log(image);
 
   return (
-    <div>
-      <form action="">
-        <input
+    <div className="w-full d-flex justify-content-center">
+    <div
+      className="d-flex flex-column justify-content-center"
+      style={{ width: "300px", padding: "20px", marginTop: "30px" }}
+    >
+      <Form className="d-flex flex-column" action="" style={{ gap: "10px" }}>
+        <Form.Label htmlFor="name">Name</Form.Label>
+        <Form.Control
           type="text"
+          id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <label htmlFor="img"></label>
-        <input
-          id="img"
+        <Form.Label htmlFor="image">Image Url</Form.Label>
+        <Form.Control
           type="file"
           accept="image/"
-          
+          id="image"
+          // value={'C://'+ image.split('/')[[9]]}
           onChange={(e) => setImage(e.target.files[0])}
         />
-        <input
-          type="text"
-          value={rating}
-          onChange={(e) => setImage(e.target.value)}
+        <Form.Label htmlFor="rating">Rating</Form.Label>
+        <Form.Control
+          type="number"
+          id="rating"
+          value = {rating}
+          onChange={(e) => setRating(e.target.value)}
         />
 
-        <button onClick={handleSubmit}>Update</button>
-      </form>
+        <Button onClick={handleSubmit}>Submit</Button>
+      </Form>
+
       <Link to={"/beverage"}>Back to Home</Link>
     </div>
-  );
+  </div>
+  )
 }
 
 export default UpdateBeverage;

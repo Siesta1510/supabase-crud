@@ -1,16 +1,21 @@
 import { supabase } from "../config/supabase";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import BeverageVideo from "./BeverageVideo";
+import { formatDateTime } from "../utils/formatTime";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "react-bootstrap";
+import { TiStar } from "react-icons/ti";
 
 const BeverageCard = () => {
   const [beverages, setBeverages] = useState([]);
+  const [star, setStar] = useState((i) => <TiStar></TiStar>);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchBeveragesData();
   }, []);
+
   const fetchBeveragesData = async () => {
     const { data, error } = await supabase.from("beverage").select("*");
     console.log(supabase.from("beverage").select("*"));
@@ -31,52 +36,48 @@ const BeverageCard = () => {
       .delete()
       .eq("id", id);
     navigate("/beverage");
-    window.location.reload();
+    setBeverages((bev) => {
+      return bev.filter((b) => b.id !== id);
+    });
   };
 
-  const handleDownload = async (bev) => {
-    const { data, error } = await supabase
-      .from("beverage")
-      .select("*")
-      .eq("id", bev.id);
-
-    if (data) {
-      await supabase.storage
-        .from("beverages")
-        .download("public/" + bev.image.split("/")[9]);
-      console.log("public/" + bev.image.split("/")[9]);
-    }
-  };
 
   return (
-    <div>
+    <div className="row" style={{ padding: "20px" }}>
       {beverages.map((beverage) => {
         return (
-          <div key={beverage.id}>
+          <div
+            className="col-6 d-flex flex-column justify-content-center align-items-center "
+            style={{
+              border: "1px solid black",
+              borderRadius: "10px",
+              overflow: "hidden",
+            }}
+            key={beverage.id}
+          >
             <h3>{beverage.name}</h3>
             <img className="beverage-image" src={beverage.image} alt="" />
-            {/* <video
-              className="beverage-image"
-              src={beverage.image}
-              controls
-            ></video> */}
-            {/* {console.log(id)} */}
-            <p>{beverage.rating}</p>
-            <p>{beverage.created_at}</p>
-            <Link to={"/beverage/update/" + beverage.id}>
-              <button>Update</button>
-            </Link>
-
-            <button onClick={() => handleDelete(beverage.id)}>Delete</button>
-            <button onClick={() => handleDownload(beverage)}>Download</button>
-
-            {/* <BeverageVideo beverages={beverages}></BeverageVideo> */}
+            <p><TiStar/></p>
+            <p>{formatDateTime(beverage.created_at)}</p>
+            <div className="d-flex justify-content-center align-items-center">
+              <Link to={"/beverage/update/" + beverage.id}>
+                <Button variant="success">Update</Button>
+              </Link>
+              <Button
+                variant="danger"
+                onClick={() => handleDelete(beverage.id)}
+                style={{ margin: "3px" }}
+              >
+                Delete
+              </Button>
+            </div>
           </div>
         );
       })}
       {error ?? <h3>{error}</h3>}
 
       <Link to={"/beverage/create"}> Create</Link>
+      <Link to={"/beverage/upload"}> Upload</Link>
     </div>
   );
 };
