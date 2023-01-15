@@ -1,17 +1,20 @@
 import { supabase } from "../config/supabase";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { formatDateTime } from "../utils/formatTime";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button } from "react-bootstrap";
+import { Button, Image } from "react-bootstrap";
 import { TiStar } from "react-icons/ti";
+import { LoadUser } from "./LoadUserContext";
 
 const BeverageCard = () => {
   const [beverages, setBeverages] = useState([]);
-  // const [star, setStar] = useState((i) => <TiStar></TiStar>);
-  const [user, setUser] = useState({})
+  const { user } = useContext(LoadUser);
   const [error, setError] = useState(null);
+  // const [username, setUsername] = useState['']
   const navigate = useNavigate();
+
+  console.log(user);
 
   useEffect(() => {
     fetchBeveragesData();
@@ -19,7 +22,7 @@ const BeverageCard = () => {
 
   const fetchBeveragesData = async () => {
     const { data, error } = await supabase.from("beverage").select("*");
-    console.log(supabase.from("beverage").select("*"));
+    // console.log(supabase.from("beverage").select("*"));
 
     if (error) {
       setError("Have a error when fetching data");
@@ -27,7 +30,7 @@ const BeverageCard = () => {
     }
     if (data) {
       setBeverages(data);
-      console.log(data);
+      // console.log(data);
     }
   };
 
@@ -42,40 +45,10 @@ const BeverageCard = () => {
     });
   };
 
-  const LoadUser = async() =>{
-    const {data, error} = await supabase.auth.getUser()
-    if(data){
-      setUser(data)
-    }
-  }
-  console.log(user);
-
-
-  // const signInWithGoogle = async ()=>{
-  //   const {data, error} = await supabase.auth.signInWithOAuth({
-  //     provider: 'google'
-  //   })
-  //   console.log(data);
-
-  // }
-  // const signInWithDiscord = async ()=>{
-  //   const {data, error} = await supabase.auth.signInWithOAuth({
-  //     provider: 'discord'
-  //   })
-  //   console.log(data);
-  //   navigate('/beverage')
-  // }
-
-  const signOut = async () =>{
-    const {data, error} = await supabase.auth.signOut()
-    setUser({})
-    data ?  '' : navigate('/login')
-  }
-
-  useEffect(()=>{
-    LoadUser()
-  },[])
-
+  const signOut = async () => {
+    const { data, error } = await supabase.auth.signOut();
+    data ? "" : navigate("/login");
+  };
 
   return (
     <div className="row" style={{ padding: "20px" }}>
@@ -92,7 +65,9 @@ const BeverageCard = () => {
           >
             <h3>{beverage.name}</h3>
             <img className="beverage-image" src={beverage.image} alt="" />
-            <p><TiStar/></p>
+            <p>
+              <TiStar />
+            </p>
             <p>{formatDateTime(beverage.created_at)}</p>
             <div className="d-flex justify-content-center align-items-center">
               <Link to={"/beverage/update/" + beverage.id}>
@@ -110,13 +85,8 @@ const BeverageCard = () => {
         );
       })}
       {error ?? <h3>{error}</h3>}
-
       <Link to={"/beverage/create"}> Create</Link>
       <Link to={"/beverage/upload"}> Upload</Link>
-      <Link to={'/login'}>Login</Link>
-      {/* <Button onClick={signInWithGoogle} style = {{width:'200px'}} variant="secondary">Sign in with google</Button> */}
-      {/* <Button onClick={signInWithDiscord} style = {{width:'200px'}} variant="secondary">Sign in with Discord</Button> */}
-      <Button onClick={signOut} style = {{width:'200px'}} variant="secondary">Sign Out</Button>
     </div>
   );
 };

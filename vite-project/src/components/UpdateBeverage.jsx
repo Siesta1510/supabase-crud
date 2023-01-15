@@ -76,7 +76,6 @@ function UpdateBeverage() {
           type="file"
           accept="image/"
           id="image"
-          // value={'C://'+ image.split('/')[[9]]}
           onChange={(e) => setImage(e.target.files[0])}
         />
         <Form.Label htmlFor="rating">Rating</Form.Label>

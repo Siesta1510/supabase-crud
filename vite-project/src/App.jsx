@@ -6,11 +6,13 @@ import UpdateBeverage from "./components/UpdateBeverage"
 import ListBeverage from "./components/ListBeverage";
 import UploadVideo from "./components/UploadVideo.";
 import LoginPage from "./components/LoginPage";
+import NavbarTop from "./components/NavbarTop";
 // import DeleteBeverage from "./components/DeleteBeverage";
 
 function App() {
   return (
     <div className="App">
+      <NavbarTop/>
       <Routes>
         <Route path="/beverage" element={<BeverageCard />}/>
         <Route path="/beverage/create" element={<CreateBeverage/>} />

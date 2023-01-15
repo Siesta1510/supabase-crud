@@ -1,32 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Auth, ThemeSupa } from "@supabase/auth-ui-react";
 import { supabase } from "../config/supabase";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { LoadUser } from "./LoadUserContext";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
+  const { user, deleteUser } = useContext(LoadUser);
 
-  useEffect(()=>{
-   supabase.auth.onAuthStateChange(async (e) => {
+  console.log(deleteUser);
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange(async (e) => {
       if (e !== "SIGNED_OUT") {
         navigate("/beverage");
-        console.log("abc");
+        // console.log("abc");
       } else {
         navigate("/login");
       }
     });
-  },[])
-  
+  }, []);
 
   return (
-    <div>
+    <div className="w-50" style={{ margin: "0 auto" }}>
       <Auth
         supabaseClient={supabase}
         appearance={{ theme: ThemeSupa }}
         providers={["discord", "google"]}
         theme="evenDarker"
       ></Auth>
+
+      <Link to={"/beverage"}>Home Page</Link>
     </div>
   );
 }
