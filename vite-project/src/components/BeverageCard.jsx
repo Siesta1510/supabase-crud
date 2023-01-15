@@ -8,7 +8,8 @@ import { TiStar } from "react-icons/ti";
 
 const BeverageCard = () => {
   const [beverages, setBeverages] = useState([]);
-  const [star, setStar] = useState((i) => <TiStar></TiStar>);
+  // const [star, setStar] = useState((i) => <TiStar></TiStar>);
+  const [user, setUser] = useState({})
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -40,6 +41,40 @@ const BeverageCard = () => {
       return bev.filter((b) => b.id !== id);
     });
   };
+
+  const LoadUser = async() =>{
+    const {data, error} = await supabase.auth.getUser()
+    if(data){
+      setUser(data)
+    }
+  }
+  console.log(user);
+
+
+  // const signInWithGoogle = async ()=>{
+  //   const {data, error} = await supabase.auth.signInWithOAuth({
+  //     provider: 'google'
+  //   })
+  //   console.log(data);
+
+  // }
+  // const signInWithDiscord = async ()=>{
+  //   const {data, error} = await supabase.auth.signInWithOAuth({
+  //     provider: 'discord'
+  //   })
+  //   console.log(data);
+  //   navigate('/beverage')
+  // }
+
+  const signOut = async () =>{
+    const {data, error} = await supabase.auth.signOut()
+    setUser({})
+    data ?  '' : navigate('/login')
+  }
+
+  useEffect(()=>{
+    LoadUser()
+  },[])
 
 
   return (
@@ -78,6 +113,10 @@ const BeverageCard = () => {
 
       <Link to={"/beverage/create"}> Create</Link>
       <Link to={"/beverage/upload"}> Upload</Link>
+      <Link to={'/login'}>Login</Link>
+      {/* <Button onClick={signInWithGoogle} style = {{width:'200px'}} variant="secondary">Sign in with google</Button> */}
+      {/* <Button onClick={signInWithDiscord} style = {{width:'200px'}} variant="secondary">Sign in with Discord</Button> */}
+      <Button onClick={signOut} style = {{width:'200px'}} variant="secondary">Sign Out</Button>
     </div>
   );
 };

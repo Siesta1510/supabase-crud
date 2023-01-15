@@ -5,6 +5,7 @@ import BeverageCard from "./components/BeverageCard";
 import UpdateBeverage from "./components/UpdateBeverage"
 import ListBeverage from "./components/ListBeverage";
 import UploadVideo from "./components/UploadVideo.";
+import LoginPage from "./components/LoginPage";
 // import DeleteBeverage from "./components/DeleteBeverage";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/beverage/update/:id" element={<UpdateBeverage/>} />
         <Route path="/beverage/upload" element={<UploadVideo/>} />
         <Route path="/list" element={<ListBeverage/>}/>
+        <Route path="/login" element={<LoginPage/>}></Route>
       </Routes>
     </div>
   );

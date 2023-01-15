@@ -11,7 +11,7 @@ function CreateBeverage() {
 
   const [error, setError] = useState("");
 
-  console.log(image);
+  // console.log(image);
 
   const navigate = useNavigate();
 
