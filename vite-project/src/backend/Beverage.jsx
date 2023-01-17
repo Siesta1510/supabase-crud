@@ -24,16 +24,20 @@ const BeverageCard = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    const { data, error } = await supabase
+      .from("beverage")
+      .delete()
+      .eq("id", id);
+    navigate("/beverage");
+    setBeverages((bev) => {
+      return bev.filter((b) => b.id !== id);
+    });
+  };
+
   return (
-    <div style={{height:'1000px',backgroundColor: " #1a2327"}}>
-      <Row
-        className="g-8 d-flex "
-        style={{
-          width: "1100px",
-          margin: "0 auto",
-          height: '600px'
-        }}
-      >
+    <div style={{height:'1000px'}}>
+      <Row className="g-8 d-flex " style={{width: '1100px', margin:'0 auto', backgroundColor:''}} >
         {beverages.map((beverage) => {
           return (
             <Col
@@ -42,7 +46,6 @@ const BeverageCard = () => {
                 overflow: "hidden",
                 width: "20%",
                 marginTop: "20px",
-                height:'300px'
               }}
               key={beverage.id}
             >
@@ -54,11 +57,25 @@ const BeverageCard = () => {
                 src={beverage.image}
                 alt=""
               />
+              <div className="d-flex justify-content-center align-items-center">
+                <Link to={"/beverage/update/" + beverage.id}>
+                  <Button variant="success">Update</Button>
+                </Link>
+                <Button
+                  variant="danger"
+                  onClick={() => handleDelete(beverage.id)}
+                  style={{ margin: "3px" }}
+                >
+                  Delete
+                </Button>
+              </div>
             </Col>
           );
         })}
         {error ?? <Card.Text>{error}</Card.Text>}
       </Row>
+      <Link to={"/beverage/create"}> Create</Link>
+      <Link to={"/beverage/upload"}> Upload</Link>
     </div>
   );
 };

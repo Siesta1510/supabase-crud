@@ -2,11 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { Auth, ThemeSupa } from "@supabase/auth-ui-react";
 import { supabase } from "../config/supabase";
 import { Link, useNavigate } from "react-router-dom";
-import { LoadUser } from "./LoadUserContext";
+import { LoadUser } from "../context/LoadUserContext";
 
 function LoginPage() {
   const navigate = useNavigate();
-  // const [user, setUser] = useState({});
   const { user, deleteUser } = useContext(LoadUser);
 
   console.log(deleteUser);

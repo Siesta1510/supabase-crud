@@ -1,20 +1,20 @@
-// import "./App.css";
 import { Link, Route, Routes } from "react-router-dom";
-import CreateBeverage from "./components/CreateBeverage";
+import CreateBeverage from "./backend/CreateBeverage";
 import BeverageCard from "./components/BeverageCard";
-import UpdateBeverage from "./components/UpdateBeverage"
+import UpdateBeverage from "./backend/UpdateBeverage"
 import ListBeverage from "./components/ListBeverage";
-import UploadVideo from "./components/UploadVideo.";
+import UploadVideo from "./backend/UploadVideo.";
 import LoginPage from "./components/LoginPage";
 import NavbarTop from "./components/NavbarTop";
-// import DeleteBeverage from "./components/DeleteBeverage";
+import Beverage from './backend/Beverage'
 
 function App() {
   return (
     <div className="App">
       <NavbarTop/>
       <Routes>
-        <Route path="/beverage" element={<BeverageCard />}/>
+        <Route path="/" element={<BeverageCard />}/>
+        <Route path="/beverage" element={<Beverage />}/>
         <Route path="/beverage/create" element={<CreateBeverage/>} />
         <Route path="/beverage/update/:id" element={<UpdateBeverage/>} />
         <Route path="/beverage/upload" element={<UploadVideo/>} />

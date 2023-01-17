@@ -7,7 +7,7 @@ import {
   Image,
   Button,
 } from "react-bootstrap";
-import { LoadUser } from "./LoadUserContext";
+import { LoadUser } from "../context/LoadUserContext";
 import { FaSignOutAlt } from "react-icons/fa";
 import { supabase } from "../config/supabase";
 import { useNavigate, Link } from "react-router-dom";
@@ -28,7 +28,7 @@ function NavbarTop() {
     <div style={{ height: "60px" }}>
       <Navbar fixed="top" expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand>Bla Bla</Navbar.Brand>
+          <Navbar.Brand><Link to={'/'}>Bla Bla</Link></Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
