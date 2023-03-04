@@ -36,8 +36,9 @@ body {
 }
 
 .image-items {
-  width: 1200px;
-  height: 1000px;
+  width: 200px;
+  height: 180px;
+  margin-top: 20px;
 }
 
 .image-items img {
@@ -47,3 +48,7 @@ body {
   object-position: center;
 }
 
+.video{
+  width: 1000px;
+  height: 500px;
+}

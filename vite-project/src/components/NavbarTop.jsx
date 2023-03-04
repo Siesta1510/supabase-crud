@@ -7,13 +7,13 @@ import {
   Image,
   Button,
 } from "react-bootstrap";
-import { LoadUser } from "../context/LoadUserContext";
+import { AuthContext } from "../context/AuthContext";
 import { FaSignOutAlt } from "react-icons/fa";
 import { supabase } from "../config/supabase";
 import { useNavigate, Link } from "react-router-dom";
 
 function NavbarTop() {
-  const { user,deleteUser } = useContext(LoadUser);
+  const { user,deleteUser } = useContext(AuthContext);
   const navigate = useNavigate();
   console.log(user?.user_metadata);
 
@@ -33,10 +33,13 @@ function NavbarTop() {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link>
-                <Link to="/beverage">Home Page</Link>
+                <Link to="/beverage">Admin Page</Link>
               </Nav.Link>
               <Nav.Link>
                 <Link to="/list">Storage</Link>
+              </Nav.Link>
+              <Nav.Link>
+                <Link to="/video">Video</Link>
               </Nav.Link>
               <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

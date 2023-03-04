@@ -7,6 +7,7 @@ import UploadVideo from "./backend/UploadVideo.";
 import LoginPage from "./components/LoginPage";
 import NavbarTop from "./components/NavbarTop";
 import Beverage from './backend/Beverage'
+import Video from "./components/Video";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/beverage/upload" element={<UploadVideo/>} />
         <Route path="/list" element={<ListBeverage/>}/>
         <Route path="/login" element={<LoginPage/>}></Route>
+        <Route path="/video" element={<Video/>}></Route>
       </Routes>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { supabase } from "../config/supabase";
 import { useNavigate, Link } from "react-router-dom";
-import { Form, Button} from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 
 function CreateBeverage() {
   const [name, setName] = useState("");

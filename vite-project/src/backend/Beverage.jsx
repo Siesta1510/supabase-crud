@@ -3,6 +3,9 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Col, Image, Row, Card } from "react-bootstrap";
+import { BiEdit } from "react-icons/bi";
+import { AiFillDelete } from "react-icons/ai";
+import { IoMdAddCircle } from "react-icons/io";
 
 const BeverageCard = () => {
   const [beverages, setBeverages] = useState([]);
@@ -36,8 +39,11 @@ const BeverageCard = () => {
   };
 
   return (
-    <div style={{height:'1000px'}}>
-      <Row className="g-8 d-flex " style={{width: '1100px', margin:'0 auto', backgroundColor:''}} >
+    <div style={{ height: "1000px" }}>
+      <Row
+        className="g-8 d-flex "
+        style={{ width: "1100px", margin: "0 auto", backgroundColor: "" }}
+      >
         {beverages.map((beverage) => {
           return (
             <Col
@@ -59,14 +65,16 @@ const BeverageCard = () => {
               />
               <div className="d-flex justify-content-center align-items-center">
                 <Link to={"/beverage/update/" + beverage.id}>
-                  <Button variant="success">Update</Button>
+                  <Button variant="success">
+                    <BiEdit />
+                  </Button>
                 </Link>
                 <Button
                   variant="danger"
                   onClick={() => handleDelete(beverage.id)}
                   style={{ margin: "3px" }}
                 >
-                  Delete
+                  <AiFillDelete />
                 </Button>
               </div>
             </Col>
@@ -74,8 +82,17 @@ const BeverageCard = () => {
         })}
         {error ?? <Card.Text>{error}</Card.Text>}
       </Row>
-      <Link to={"/beverage/create"}> Create</Link>
-      <Link to={"/beverage/upload"}> Upload</Link>
+      <div className="d-flex ml-3">
+        <Button variant="primary">
+          <Link to={"/beverage/create"}>
+            Add
+            <IoMdAddCircle />
+          </Link>
+        </Button>
+        <Button variant="success">
+          <Link to={"/beverage/upload"}> Upload</Link>
+        </Button>
+      </div>
     </div>
   );
 };

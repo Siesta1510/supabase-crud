@@ -3,11 +3,11 @@ import { createContext } from "react";
 import { supabase } from "../config/supabase";
 // import  {useNavigate}  from "react-router-dom";
 
-export const LoadUser = createContext();
+export const AuthContext = createContext();
 
-const LoadUserProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState([]);
-//   const navigate = useNavigate()
+  //   const navigate = useNavigate()
   useEffect(() => {
     LoadUserLogin();
   }, []);
@@ -19,13 +19,14 @@ const LoadUserProvider = ({ children }) => {
     }
   };
 
-  function deleteUser(){
-    setUser([])
+  function deleteUser() {
+    setUser([]);
   }
 
-
-  
-
-  return <LoadUser.Provider value={{user,deleteUser}}>{children}</LoadUser.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, deleteUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
-export default LoadUserProvider;
+export default AuthProvider;

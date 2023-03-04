@@ -5,7 +5,7 @@ import { BiEdit } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
-function ListBeverage() {
+function Video() {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -13,19 +13,21 @@ function ListBeverage() {
   const retriveAll = async () => {
     const { data, error } = await supabase.storage
       .from("beverages")
-      .list("public");
+      .list("video");
     console.log(data);
     setImages(data);
   };
+
+  console.log(images)
 
   const handleDelete = async (id) => {
     try {
       setIsLoading(true);
       const { data, error } = await supabase.storage
         .from("beverages")
-        .remove([`public/${id}`]);
+        .remove([`video/${id}`]);
       console.log(id);
-      navigate("/list");
+      navigate("/video");
       setImages((prev) => {
         return prev.filter((b) => b.name !== id);
       });
@@ -48,11 +50,7 @@ function ListBeverage() {
       {images.map((image) => {
         return (
           <div className="image-items">
-            <img
-              className="image-item"
-              src={`https://mbzluisrzxmskyoiehjz.supabase.co/storage/v1/object/public/beverages/public/${image.name}`}
-              alt=""
-            />
+            <video className="video" controls src={`https://mbzluisrzxmskyoiehjz.supabase.co/storage/v1/object/public/beverages/video/`+ image.name}></video>
             <Button variant="success">
               <BiEdit className="w-5 h-5 text-white" />
             </Button>
@@ -68,4 +66,4 @@ function ListBeverage() {
   );
 }
 
-export default ListBeverage;
+export default Video;
